@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint src --ignore-path .eslintignore --ext .ts",
-    "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "start:prod": "node ./dist/server.js",
     "lint:fix": "eslint src --ignore-path .eslintignore --ext .ts --fix",
     "prettier": "prettier --write \"./src/**/*.+(ts|js|json)\"",
@@ -17,11 +17,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "http-status": "^2.1.0",
     "mongoose": "^8.12.1",
-    "validator": "^13.15.0"
+    "validator": "^13.15.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

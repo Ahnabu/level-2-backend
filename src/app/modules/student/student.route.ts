@@ -4,15 +4,13 @@ import {  StudentControllers } from './student.controller';
 
 const router = express.Router();
 
+router.get("/students", StudentControllers.getAllStudents)
 
-router.post('/create-student', StudentControllers.createStudent)
 
-router.get("/", StudentControllers.getAllStudents)
+router.get("/students/:studentId", StudentControllers.getSingleStudent)
 
-router.get("/:studentId", StudentControllers.getSingleStudent)
+router.delete("/students/:studentId", StudentControllers.deleteAStudent)
 
-router.delete("/delete/:studentId", StudentControllers.deleteAStudent)
-
-router.patch("/update/:studentId", StudentControllers.updateAStudent)
+router.patch("/students/:studentId", StudentControllers.updateAStudent)
 
 export const StudentRoutes = router;
