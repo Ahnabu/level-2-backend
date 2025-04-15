@@ -1,39 +1,36 @@
-import config from "../../config";
-import { Student } from "../student/student.interface";
-import { StudentModel } from "../student/student.model";
-import { TUser } from "./user.interface";
-import { User } from "./user.model";
+import config from '../../config';
+import { TStudent } from '../student/student.interface';
+import { Student } from '../student/student.model';
+import { TUser } from './user.interface';
+import { User } from './user.model';
 
+const createStudentIntoDB = async (password: string, studentData: TStudent) => {
+  // create a user object
+  const userData: Partial<TUser> = {};
 
-const createStudentIntoDB = async (password: string, student: Student) => {
-  //create a user object
- const user:Partial<TUser> = {}
-  // if password is not provided, set default password
- 
-  user.password = password || config.default_password
- 
-  //set role
-  user.role = "student"
+  //if password is not given , use deafult password
+  userData.password = password || (config.default_password as string);
 
-  // set manually generated id
-  user.id = '2030' + Math.floor(Math.random() * 10000).toString().padStart(4, '0')
+  //set student role
+  userData.role = 'student';
+
+  //set manually generated it
+  userData.id = '2030100001';
 
   // create a user
-  const newUser = await User.create(user);
+  const newUser = await User.create(userData);
 
-  // create a student
-  if (Object.keys(student).length > 0) {
-    //set id,_id
-    student.id = newUser.id;
-    student.user = newUser._id;
-    // create student
-    const newStudent = await StudentModel.create(student);
-    return newStudent
+  //create a student
+  if (Object.keys(newUser).length) {
+    // set id , _id as user
+    studentData.id = newUser.id;
+    studentData.user = newUser._id; //reference _id
+
+    const newStudent = await Student.create(studentData);
+    return newStudent;
   }
-
 };
 
-
 export const UserServices = {
-    createStudentIntoDB,
-    };
+  createStudentIntoDB,
+};
