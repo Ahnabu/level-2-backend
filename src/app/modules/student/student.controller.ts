@@ -1,15 +1,15 @@
-import { NextFunction, Request, Response } from 'express';
+import {  Request, Response } from 'express';
 import httpStatus from 'http-status';
 import sendResponse from '../../utils/sendResponse';
 import { StudentServices } from './student.service';
+import catchAsync from '../../utils/catchAsync';
 
-const getSingleStudent = async (
+const getSingleStudent = catchAsync (async (
   req: Request,
   res: Response,
-  next: NextFunction,
+
 ) => {
-  try {
-    const { studentId } = req.params;
+  const { studentId } = req.params;
     const result = await StudentServices.getSingleStudentFromDB(studentId);
 
     sendResponse(res, {
@@ -18,17 +18,13 @@ const getSingleStudent = async (
       message: 'Student is retrieved succesfully',
       data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
-
-const getAllStudents = async (
+});
+const getAllStudents = catchAsync(async (
   req: Request,
   res: Response,
-  next: NextFunction,
+
 ) => {
-  try {
+
     const result = await StudentServices.getAllStudentsFromDB();
 
     sendResponse(res, {
@@ -37,17 +33,16 @@ const getAllStudents = async (
       message: 'Student are retrieved succesfully',
       data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+ 
 
-const deleteStudent = async (
+});
+
+const deleteStudent = catchAsync(async (
   req: Request,
   res: Response,
-  next: NextFunction,
+
 ) => {
-  try {
+
     const { studentId } = req.params;
     const result = await StudentServices.deleteStudentFromDB(studentId);
 
@@ -57,14 +52,11 @@ const deleteStudent = async (
       message: 'Student is deleted succesfully',
       data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+ 
+});
 
 
-const updateAStudent = async (req: Request, res: Response) => {
-  try {
+const updateAStudent = catchAsync(async (req: Request, res: Response) => {
       const { studentId } = req.params;
       const { student: studentData } = req.body;
 
@@ -75,10 +67,7 @@ const updateAStudent = async (req: Request, res: Response) => {
           message: 'Student is updated successfully',
           data: result,
       });
-  } catch (err) {
-      console.log(err);
-  }
-}
+ })
 
 
 export const StudentControllers = {
