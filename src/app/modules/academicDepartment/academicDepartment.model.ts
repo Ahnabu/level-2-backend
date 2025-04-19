@@ -6,6 +6,7 @@ const academicDepartmentSchema =
      name: {
          type: String,
          required: true,
+         unique: true,
             
      },
      academicFaculty: {
@@ -18,5 +19,14 @@ const academicDepartmentSchema =
             timestamps: true,
  })
 
+academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
+    const query = this.getQuery();
+    const isDepartmentExists = await AcademicDepartment.findOne(query);
+    if (!isDepartmentExists) {
+        throw new Error("Academic Department already exists");
+    }
+    next();
+    
+})
 
 export const AcademicDepartment = model<TAcademicDepartment>("AcademicDepartment", academicDepartmentSchema)

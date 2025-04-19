@@ -62,5 +62,6 @@ AcademicSemesterSchema.pre("save", async function (next) {
     if (isSemesterExists) {
         throw new Error("Academic Semester already exists!");
     }
+    next()
 })
 export const AcademicSemester = model<TAcademicSemester>("AcademicSemester", AcademicSemesterSchema, )
