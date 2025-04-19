@@ -41,11 +41,11 @@ const AcademicSemesterSchema = new Schema<TAcademicSemester>({
         enum: months
     },
     startDate: {
-        type: Date,
+        type: String,
         required: true,
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true,
     }
 }, {

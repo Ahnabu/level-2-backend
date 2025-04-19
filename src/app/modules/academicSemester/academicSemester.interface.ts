@@ -6,6 +6,6 @@ export type TAcademicSemester = {
     year: string,
     startMonth: TMonths,
     endMonth: TMonths,
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    endDate: string,
 }
