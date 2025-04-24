@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { TStudent } from './student.interface';
 import { Student } from './student.model';
 import AppError from '../../errors/AppError';
-import QueryBuilder from '../../builder/QuearyBuilder';
+import QueryBuilder from '../../builder/QueryBuilder';
 import { studentSearchableFields } from './student.constant';
 
 const getAllStudentsFromDB = async (query:Record<string,unknown>) => {
