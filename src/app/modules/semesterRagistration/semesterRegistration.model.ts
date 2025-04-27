@@ -12,7 +12,7 @@ const semesterRegistrationSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["UPCOMING", "ON_GOING", "ENDED"],
+            enum: ["UPCOMING", "ONGOING", "ENDED"],
             required: true,
         },
         startDate: {
