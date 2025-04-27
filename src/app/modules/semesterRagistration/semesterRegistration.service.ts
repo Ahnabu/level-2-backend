@@ -3,11 +3,12 @@ import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
-// import { OfferedCourse } from '../OfferedCourse/OfferedCourse.model';
+
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { RegistrationStatus } from './semesterRegistration.constant';
 import { TSemesterRegistration } from './semesterRegistration.interface';
 import { SemesterRegistration } from './semesterRegistration.model';
+import { OfferedCourse } from '../offeredCourse/offeredCourse.model';
 
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
@@ -183,21 +184,21 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
   try {
     session.startTransaction();
 
-    // const deletedOfferedCourse = await OfferedCourse.deleteMany(
-    //   {
-    //     semesterRegistration: id,
-    //   },
-    //   {
-    //     session,
-    //   },
-    // );
+    const deletedOfferedCourse = await OfferedCourse.deleteMany(
+      {
+        semesterRegistration: id,
+      },
+      {
+        session,
+      },
+    );
 
-    // if (!deletedOfferedCourse) {
-    //   throw new AppError(
-    //     httpStatus.BAD_REQUEST,
-    //     'Failed to delete semester registration !',
-    //   );
-    // }
+    if (!deletedOfferedCourse) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to delete semester registration !',
+      );
+    }
 
     const deletedSemesterRegistration =
       await SemesterRegistration.findByIdAndDelete(id, {
