@@ -1,0 +1,16 @@
+import { z } from "zod";
+
+
+const loginValidationSchema = z.object({
+    body: z.object({
+        id: z.string({required_error: 'ID is required'}),
+        password: z.string({
+            required_error: 'Password is required',
+        }).min(6, { message: 'Password must be at least 6 characters long' }),
+        }),
+    })
+
+
+export const AuthValidation = {
+    loginValidationSchema,
+};
