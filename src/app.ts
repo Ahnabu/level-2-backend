@@ -1,24 +1,32 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextFunction } from 'express';
-import cors from 'cors'
-import express, { Application, Request, Response } from 'express'
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
+
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express, { Application } from 'express';
+
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
-const app:Application = express()
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
+const app: Application = express();
 
-//parser
+//parsers
 app.use(express.json());
-app.use(cors())
-app.get('/', (req:Request, res:Response) => {
-  res.send('Hello World!')
-})
+app.use(cookieParser());
+app.use(cors({ origin: ['http://localhost:5173'] }));
 
-app.use('/api/v1/',router)
+// application routes
+app.use('/api/v1', router);
 
-app.use(globalErrorHandler)
-app.use(notFound)
+// const test = async (req: Request, res: Response) => {
+//   const a = 10;
+//   res.send(a);
+// };
 
-export default app
+// app.get('/', test);
+
+app.use(globalErrorHandler);
+
+//Not Found
+app.use(notFound);
+
+export default app;

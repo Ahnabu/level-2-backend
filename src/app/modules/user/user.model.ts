@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
+
 import bcrypt from 'bcryptjs';
 import { Schema, model } from 'mongoose';
 import config from '../../config';
@@ -42,12 +42,9 @@ const userSchema = new Schema<TUser, UserModel>(
 );
 
 userSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this; // doc
   // hashing password and save into DB
-
-  user.password = await bcrypt.hash(
-    user.password,
+  this.password = await bcrypt.hash(
+    this.password,
     Number(config.bcrypt_salt_rounds),
   );
 
@@ -63,6 +60,22 @@ userSchema.post('save', function (doc, next) {
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
   return await User.findOne({ id }).select('+password');
 };
+// userSchema.statics.isBlocked = async function (id: string) {
+//   const user = await this.findOne({ id });
+//   if (!user) {
+//     return false;
+//   }
+//   return user.status === 'blocked';
+// }
+
+// userSchema.statics.isDeleted = async function (id: string) {
+//   const user = await this.findOne({ id });
+//   if (!user) {
+//     return false;
+//   }
+//   return user.isDeleted;
+// }
+  
 
 userSchema.statics.isPasswordMatched = async function (
   plainTextPassword,

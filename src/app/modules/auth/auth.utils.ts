@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 export const createToken = (
   jwtPayload: { userId: string; role: string },
   secret: string,
-  expiresIn: string | number,
+  expiresIn: string,
 ) => {
-  return jwt.sign(jwtPayload, secret,{
-    expiresIn: typeof expiresIn === 'string' || typeof expiresIn === 'number' ? expiresIn : undefined,
+  return jwt.sign(jwtPayload, secret, {
+    expiresIn,
   });
 };
