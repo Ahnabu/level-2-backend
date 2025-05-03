@@ -12,4 +12,7 @@ export default {
   NODE_ENV: process.env.NODE_ENV,
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
+  reset_password_url: process.env.RESET_PASSWORD_URL,
+  nodemailer_mail: process.env.NODEMAILER_MAIL,
+  nodemailer_pass: process.env.NODEMAILER_PASS,
 };
