@@ -24,17 +24,6 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
-const forgotPassword = catchAsync(async (req, res) => {
-  const { id } = req.body;
-  const result = await AuthServices.forgotPassword(id);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Reset password link sent to your email!',
-    data: result,
-  });
-});
-
 const changePassword = catchAsync(async (req, res) => {
   const { ...passwordData } = req.body;
 
@@ -62,9 +51,37 @@ const refreshToken = catchAsync(async (req, res) => {
   });
 });
 
+const forgetPassword = catchAsync(async (req, res) => {
+  const userId = req.body.id;
+  const result = await AuthServices.forgetPassword(userId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Reset link is generated successfully!',
+    data: result,
+  });
+});
+
+const resetPassword = catchAsync(async (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    throw new Error('Authorization token is missing');
+  }
+
+  const result = await AuthServices.resetPassword(req.body, token);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset succesful!',
+    data: result,
+  });
+});
+
 export const AuthControllers = {
   loginUser,
   changePassword,
   refreshToken,
-  forgotPassword,
+  forgetPassword,
+  resetPassword,
 };

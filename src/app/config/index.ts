@@ -15,4 +15,6 @@ export default {
   reset_password_url: process.env.RESET_PASSWORD_URL,
   nodemailer_mail: process.env.NODEMAILER_MAIL,
   nodemailer_pass: process.env.NODEMAILER_PASS,
+  reset_password_ui_url:
+    process.env.RESET_PASSWORD_UI_URL || 'http://localhost:3000',
 };
