@@ -55,7 +55,7 @@ const guardianSchema = new Schema<TGuardian>({
   },
 });
 
-const localGuardianSchema = new Schema<TLocalGuardian>({
+const localGuradianSchema = new Schema<TLocalGuardian>({
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -130,7 +130,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Guardian information is required'],
     },
     localGuardian: {
-      type: localGuardianSchema,
+      type: localGuradianSchema,
       required: [true, 'Local guardian information is required'],
     },
     profileImg: { type: String },
@@ -154,9 +154,9 @@ const studentSchema = new Schema<TStudent, StudentModel>(
   },
 );
 
-// virtual
+//virtual
 studentSchema.virtual('fullName').get(function () {
-  return this.name.firstName + this.name.middleName + this.name.lastName;
+  return this?.name?.firstName + this?.name?.middleName + this?.name?.lastName;
 });
 
 // Query Middleware
@@ -182,7 +182,3 @@ studentSchema.statics.isUserExists = async function (id: string) {
 };
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema);
-
-
-
-
