@@ -8,7 +8,7 @@ import { hasTimeConflict } from './offeredCourse.utils';
 import AppError from '../../errors/AppError';
 import { Course } from '../course/course.model';
 import { TOfferedCourse } from './offeredCourse.interface';
-import { SemesterRegistration } from '../semesterRagistration/semesterRegistration.model';
+import { SemesterRegistration } from '../semesterRegistration/semesterRegistration.model';
 import { Faculty } from '../faculty/faculty.model';
 
 const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
