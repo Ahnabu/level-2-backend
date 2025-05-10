@@ -1,38 +1,59 @@
-import { TAcademicDepartment } from "./academicDepartment.interface";
-import { AcademicDepartment } from "./academicDepartment.model";
+import QueryBuilder from '../../builder/QueryBuilder';
+import { TAcademicDepartment } from './academicDepartment.interface';
+import { AcademicDepartment } from './academicDepartment.model';
+import { AcademicDepartmentSearchableFields } from './academicDepartments.constant';
 
+const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
+  const result = await AcademicDepartment.create(payload);
+  return result;
+};
 
-const createAcademicDeptToDB = async (payload:TAcademicDepartment) => {
-    
-    const result = await AcademicDepartment.create(payload);
-    return result;
-}
+const getAllAcademicDepartmentsFromDB = async (
+  query: Record<string, unknown>,
+) => {
+  const academicDepartmentQuery = new QueryBuilder(
+    AcademicDepartment.find().populate('academicFaculty'),
+    query,
+  )
+    .search(AcademicDepartmentSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-const getAllAcademicDept = async () => {
-    const result = await AcademicDepartment.find().sort({ createdAt: -1 }).populate("academicFaculty").lean();
-    return result;
-}
+  const result = await academicDepartmentQuery.modelQuery;
+  const meta = await academicDepartmentQuery.countTotal();
 
-const getSingleAcademicDept = async (id: string) => {
-    const result = await AcademicDepartment.findById(id).populate("academicFaculty").lean();
-    return result
-}
+  return {
+    meta,
+    result,
+  };
+};
 
-const updateAcademicDeptToDB = async (id: string, payload: Partial<TAcademicDepartment>) => {
-    const result = await AcademicDepartment.findByIdAndUpdate(id
-        , payload, { new: true }).populate("academicFaculty").lean();
-    return result;
-}
+const getSingleAcademicDepartmentFromDB = async (id: string) => {
+  const result =
+    await AcademicDepartment.findById(id).populate('academicFaculty');
 
-const deleteAcademicDeptFromDB = async (id: string) => {
-    const result = await AcademicDepartment.findByIdAndDelete(id).lean();
-    return result
-}
+  return result;
+};
+
+const updateAcademicDepartmentIntoDB = async (
+  id: string,
+  payload: Partial<TAcademicDepartment>,
+) => {
+  const result = await AcademicDepartment.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+    },
+  );
+  return result;
+};
 
 export const AcademicDepartmentServices = {
-    createAcademicDeptToDB,
-    getAllAcademicDept,
-    getSingleAcademicDept,
-    updateAcademicDeptToDB,
-    deleteAcademicDeptFromDB,
-}
+  createAcademicDepartmentIntoDB,
+  getAllAcademicDepartmentsFromDB,
+  getSingleAcademicDepartmentFromDB,
+  updateAcademicDepartmentIntoDB,
+};

@@ -1,41 +1,50 @@
-import { TAcademicFaculty } from "./academicFaculty.interface";
-import { AcademicFaculty } from "./academicFaculty.model";
+import QueryBuilder from '../../builder/QueryBuilder';
+import { AcademicFacultySearchableFields } from './academicFaculty.constant';
+import { TAcademicFaculty } from './academicFaculty.interface';
+import { AcademicFaculty } from './academicFaculty.model';
 
+const createAcademicFacultyIntoDB = async (payload: TAcademicFaculty) => {
+  const result = await AcademicFaculty.create(payload);
+  return result;
+};
 
-const createAcademicFacultyToDB = async (payload: TAcademicFaculty) => {
-    const result = await AcademicFaculty.create(payload);
-    return result;
-}
+const getAllAcademicFacultiesFromDB = async (
+  query: Record<string, unknown>,
+) => {
+  const academicFacultyQuery = new QueryBuilder(AcademicFaculty.find(), query)
+    .search(AcademicFacultySearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-const getAllAcademicFaculty = async () => {
-    const result = await AcademicFaculty.find().sort({ createdAt: -1 }).lean();
-    return result;
-}
+  const result = await academicFacultyQuery.modelQuery;
+  const meta = await academicFacultyQuery.countTotal();
 
-const getSingleAcademicFaculty = async (id: string) => {
-    const result = await AcademicFaculty.findById(id).lean();
-    if (!result) {
-        throw new Error("Academic Faculty not found");
-    }
-    return result;
-}
+  return {
+    meta,
+    result,
+  };
+};
 
-const updateAcademicFacultyToDB = async (id: string, payload: Partial<TAcademicFaculty>) => {
-    const result = await AcademicFaculty.findByIdAndUpdate(id, payload)
-    return result;
-}
+const getSingleAcademicFacultyFromDB = async (id: string) => {
+  const result = await AcademicFaculty.findById(id);
+  return result;
+};
 
-const deleteAcademicFacultyFromDB = async (id: string) => {
-    const result = await AcademicFaculty.findByIdAndDelete(id).lean();
-    if (!result) {
-        throw new Error("Academic Faculty not found");
-    }
-    return result;
-}
+const updateAcademicFacultyIntoDB = async (
+  id: string,
+  payload: Partial<TAcademicFaculty>,
+) => {
+  const result = await AcademicFaculty.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 export const AcademicFacultyServices = {
-    createAcademicFacultyToDB,
-    getAllAcademicFaculty,
-    getSingleAcademicFaculty,
-    updateAcademicFacultyToDB,
-    deleteAcademicFacultyFromDB,
-}
+  createAcademicFacultyIntoDB,
+  getAllAcademicFacultiesFromDB,
+  getSingleAcademicFacultyFromDB,
+  updateAcademicFacultyIntoDB,
+};

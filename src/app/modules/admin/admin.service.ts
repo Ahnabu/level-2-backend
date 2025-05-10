@@ -6,7 +6,6 @@ import { User } from '../user/user.model';
 import { AdminSearchableFields } from './admin.constant';
 import { TAdmin } from './admin.interface';
 import { Admin } from './admin.model';
-
 const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
     .search(AdminSearchableFields)
@@ -16,7 +15,11 @@ const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await adminQuery.modelQuery;
-  return result;
+  const meta = await adminQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleAdminFromDB = async (id: string) => {
@@ -80,7 +83,10 @@ const deleteAdminFromDB = async (id: string) => {
   } catch (err: unknown) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err instanceof Error ? err.message : String(err));
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error(String(err));
   }
 };
 

@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/create-academic-faculty',auth(USER_ROLE.superAdmin,USER_ROLE.admin), validateRequest(AcademicFacultyValidation.createAcademicFacultyValidationSchema), AcademicFacultyControllers.createAcademicFaculty)
 
-router.get('/', AcademicFacultyControllers.getAllAcademicFaculty)
+router.get('/', AcademicFacultyControllers.getAllAcademicFaculties)
 
 router.get('/:id', AcademicFacultyControllers.getSingleAcademicFaculty)
 
