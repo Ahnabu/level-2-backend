@@ -62,7 +62,15 @@ const getMe = catchAsync(async (req, res) => {
   //   throw new AppError(httpStatus.NOT_FOUND, 'Token not found !');
   // }
 
-  const { userId, role } = req.user;
+  if (!req.user || typeof req.user !== 'object' || !('userId' in req.user) || !('role' in req.user)) {
+    return sendResponse(res, {
+      statusCode: httpStatus.UNAUTHORIZED,
+      success: false,
+      message: 'User information is missing or invalid',
+      data: null,
+    });
+  }
+  const { userId, role } = req.user as { userId: string; role: string };
 
   const result = await UserServices.getMe(userId, role);
 

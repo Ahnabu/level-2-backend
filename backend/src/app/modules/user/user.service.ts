@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
-import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import { TAdmin } from '../admin/admin.interface';
@@ -19,6 +18,7 @@ import {
   generateStudentId,
 } from './user.utils';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
+import mongoose from 'mongoose';
 
 const createStudentIntoDB = async (
   file: any,
@@ -46,9 +46,9 @@ const createStudentIntoDB = async (
   }
 
   // find department
-  const academicDepartment = await AcademicDepartment.findById(
+  const academicDepartment =  await AcademicDepartment.findById(
     payload.academicDepartment,
-  );
+  ) ;
 
   if (!academicDepartment) {
     throw new AppError(400, 'Academic department not found');
