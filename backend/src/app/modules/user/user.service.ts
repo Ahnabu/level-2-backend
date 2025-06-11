@@ -53,6 +53,7 @@ const createStudentIntoDB = async (
   if (!academicDepartment) {
     throw new AppError(400, 'Academic department not found');
   }
+   // @ts-expect-error: academicFaculty may not be present on academicDepartment type, but is set at runtime
   payload.academicFaculty = academicDepartment.academicFaculty;
 
   const session = await mongoose.startSession();
@@ -125,6 +126,7 @@ const createFacultyIntoDB = async (
     throw new AppError(400, 'Academic department not found');
   }
 
+  // @ts-expect-error: academicFaculty may not be present on academicDepartment type, but is set at runtime
   payload.academicFaculty = academicDepartment?.academicFaculty;
 
   const session = await mongoose.startSession();

@@ -1,13 +1,17 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken'; // 1. Import SignOptions
 
 export const createToken = (
   jwtPayload: { userId: string; role: string },
   secret: string,
   expiresIn: string,
 ) => {
-  return jwt.sign(jwtPayload, secret, {
+  // 2. Explicitly define the options with the correct type
+  const signOptions: SignOptions = {
     expiresIn,
-  });
+  };
+
+  // 3. Pass the typed options object to the function
+  return jwt.sign(jwtPayload, secret, signOptions);
 };
 
 export const verifyToken = (token: string, secret: string) => {
