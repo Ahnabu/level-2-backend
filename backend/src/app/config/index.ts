@@ -12,11 +12,11 @@ export default {
   NODE_ENV: process.env.NODE_ENV || 'production',
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
-  reset_password_url: process.env.RESET_PASSWORD_URL || "https://ums-backend-one.vercel.app/api/v1/auth/reset-password",
+  reset_password_url: process.env.RESET_PASSWORD_URL || "ums-backend-gjb8.vercel.app/api/v1/auth/reset-password",
   nodemailer_mail: process.env.NODEMAILER_MAIL,
   nodemailer_pass: process.env.NODEMAILER_PASS,
   reset_password_ui_url:
-    process.env.RESET_PASSWORD_UI_URL||'https://ums-backend-one.vercel.app/' ,
+    process.env.RESET_PASSWORD_UI_URL||'ums-backend-gjb8.vercel.app' ,
   cloudinary_cloud_name:
     process.env.CLOUDINARY_CLOUD_NAME,
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY ,

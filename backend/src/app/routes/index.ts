@@ -6,7 +6,7 @@ import { AcademicFacultyRoutes } from "../modules/academicFaculty/academicFacult
 import { AcademicDepartmentRoutes } from "../modules/academicDepartment/academicDepartment.routes";
 import { FacultyRoutes } from "../modules/faculty/faculty.route";
 import { AdminRoutes } from "../modules/admin/admin.route";
-import { CourseRoutes } from "../modules/course/couse.route";
+import { CourseRoutes } from "../modules/course/course.route";
 import { semesterRegistrationRoutes } from "../modules/semesterRegistration/semesterRegistration.route";
 import { offeredCourseRoutes } from "../modules/offeredCourse/offeredCourse.routes";
 import { AuthRoutes } from "../modules/auth/auth.route";
