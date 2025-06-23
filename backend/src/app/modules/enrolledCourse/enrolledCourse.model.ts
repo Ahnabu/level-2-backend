@@ -98,7 +98,10 @@ const enrolledCourseSchema = new Schema<TEnrolledCourse>({
     type: Boolean,
     default: false,
   },
-});
+}, {
+  timestamps: true,
+}
+);
 
 const EnrolledCourse = mongoose.model<TEnrolledCourse>(
   'EnrolledCourse',

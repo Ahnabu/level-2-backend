@@ -87,6 +87,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       virtuals: true,
     },
   },
+
 );
 
 // generating full name

@@ -155,6 +155,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     toJSON: {
       virtuals: true,
     },
+    timestamps: true,
   },
 );
 
